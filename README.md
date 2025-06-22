@@ -33,3 +33,29 @@ The backend for the Airbnb Clone is built using a modern and powerful technology
 * **Redis:** An in-memory data structure store used for caching frequently accessed data to reduce database load and improve response times, as well as for session management.
 * **Docker:** A containerization platform used to create consistent and isolated development and deployment environments, ensuring the application runs the same way everywhere.
 * **CI/CD Pipelines (e.g., GitHub Actions):** Automated pipelines for continuous integration and continuous deployment, enabling automated testing, building, and deployment of code changes, leading to faster and more reliable releases.
+
+---
+
+## Team Roles
+
+A successful software development project relies on a collaborative and well-defined team structure. For the Airbnb Clone backend, the following key roles are essential, each with specific responsibilities:
+
+### Backend Developer:
+
+**Description:** Engineers and stabilizes the product, focusing on the core logic and functionality that operates behind the scenes.
+Responsibility in Project: Responsible for implementing API endpoints, designing and implementing database schemas, writing business logic, and ensuring the stability and performance of the backend services. They will work with Django and Django REST Framework to build out the core features.
+
+## Database Administrator (DBA):
+
+**Description:** Manages the database systems, ensuring data integrity, availability, and performance.
+Responsibility in Project: Manages database design, including defining entities, attributes, and relationships. They are responsible for implementing indexing for fast data retrieval, setting up caching strategies with Redis to optimize database load, and ensuring overall database health and security in PostgreSQL.
+
+### DevOps Engineer:
+
+**Description:** Facilitates cooperation between development and operations teams, building continuous integration and continuous delivery (CI/CD) pipelines for faster and more reliable delivery.
+Responsibility in Project: Handles deployment, monitoring, and scaling of the backend services. They will set up and maintain Docker containers for consistent environments and implement CI/CD pipelines (e.g., using GitHub Actions) for automated testing and deployment of code changes.
+
+### QA Engineer:
+
+**Description:** Makes sure an application performs according to requirements and spots functional and non-functional defects.
+Responsibility in Project: Ensures the backend functionalities are thoroughly tested and meet quality standards. They will design and execute test cases for API endpoints, identify and report bugs, and work closely with developers to ensure a high-quality product.
