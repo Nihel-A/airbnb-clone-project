@@ -1,3 +1,5 @@
+Here's the updated `README.md` with the "Database Design" section:
+
 # Airbnb Clone Backend
 
 ---
@@ -40,22 +42,78 @@ The backend for the Airbnb Clone is built using a modern and powerful technology
 
 A successful software development project relies on a collaborative and well-defined team structure. For the Airbnb Clone backend, the following key roles are essential, each with specific responsibilities:
 
-### Backend Developer:
+* **Backend Developer:**
+    * **Description:** Engineers and stabilizes the product, focusing on the core logic and functionality that operates behind the scenes.
+    * **Responsibility in Project:** Responsible for implementing API endpoints, designing and implementing database schemas, writing business logic, and ensuring the stability and performance of the backend services. They will work with Django and Django REST Framework to build out the core features.
 
-**Description:** Engineers and stabilizes the product, focusing on the core logic and functionality that operates behind the scenes.
-Responsibility in Project: Responsible for implementing API endpoints, designing and implementing database schemas, writing business logic, and ensuring the stability and performance of the backend services. They will work with Django and Django REST Framework to build out the core features.
+* **Database Administrator (DBA):**
+    * **Description:** Manages the database systems, ensuring data integrity, availability, and performance.
+    * **Responsibility in Project:** Manages database design, including defining entities, attributes, and relationships. They are responsible for implementing indexing for fast data retrieval, setting up caching strategies with Redis to optimize database load, and ensuring overall database health and security in PostgreSQL.
 
-## Database Administrator (DBA):
+* **DevOps Engineer:**
+    * **Description:** Facilitates cooperation between development and operations teams, building continuous integration and continuous delivery (CI/CD) pipelines for faster and more reliable delivery.
+    * **Responsibility in Project:** Handles deployment, monitoring, and scaling of the backend services. They will set up and maintain Docker containers for consistent environments and implement CI/CD pipelines (e.g., using GitHub Actions) for automated testing and deployment of code changes.
 
-**Description:** Manages the database systems, ensuring data integrity, availability, and performance.
-Responsibility in Project: Manages database design, including defining entities, attributes, and relationships. They are responsible for implementing indexing for fast data retrieval, setting up caching strategies with Redis to optimize database load, and ensuring overall database health and security in PostgreSQL.
+* **QA Engineer:**
+    * **Description:** Makes sure an application performs according to requirements and spots functional and non-functional defects.
+    * **Responsibility in Project:** Ensures the backend functionalities are thoroughly tested and meet quality standards. They will design and execute test cases for API endpoints, identify and report bugs, and work closely with developers to ensure a high-quality product.
 
-### DevOps Engineer:
+---
 
-**Description:** Facilitates cooperation between development and operations teams, building continuous integration and continuous delivery (CI/CD) pipelines for faster and more reliable delivery.
-Responsibility in Project: Handles deployment, monitoring, and scaling of the backend services. They will set up and maintain Docker containers for consistent environments and implement CI/CD pipelines (e.g., using GitHub Actions) for automated testing and deployment of code changes.
+## Database Design
 
-### QA Engineer:
+The database design is critical for the efficient storage and retrieval of all project data. We will use **PostgreSQL** as our relational database management system. Below are the key entities and their relationships:
 
-**Description:** Makes sure an application performs according to requirements and spots functional and non-functional defects.
-Responsibility in Project: Ensures the backend functionalities are thoroughly tested and meet quality standards. They will design and execute test cases for API endpoints, identify and report bugs, and work closely with developers to ensure a high-quality product.
+### Key Entities
+
+* **Users**
+    * `user_id` (Primary Key)
+    * `username` (Unique)
+    * `email` (Unique)
+    * `password_hash`
+    * `registration_date`
+
+* **Properties**
+    * `property_id` (Primary Key)
+    * `host_id` (Foreign Key to Users)
+    * `title`
+    * `description`
+    * `price_per_night`
+    * `location`
+    * `availability_status`
+
+* **Bookings**
+    * `booking_id` (Primary Key)
+    * `user_id` (Foreign Key to Users)
+    * `property_id` (Foreign Key to Properties)
+    * `check_in_date`
+    * `check_out_date`
+    * `total_price`
+    * `booking_status` (e.g., pending, confirmed, cancelled)
+
+* **Reviews**
+    * `review_id` (Primary Key)
+    * `user_id` (Foreign Key to Users)
+    * `property_id` (Foreign Key to Properties)
+    * `rating` (1-5 stars)
+    * `comment`
+    * `review_date`
+
+* **Payments**
+    * `payment_id` (Primary Key)
+    * `booking_id` (Foreign Key to Bookings)
+    * `user_id` (Foreign Key to Users)
+    * `amount`
+    * `payment_date`
+    * `payment_status` (e.g., successful, failed, pending)
+    * `transaction_id` (from payment gateway)
+
+### Entity Relationships
+
+* **Users and Properties:** A `User` can be a host and therefore can list **multiple** `Properties`. Each `Property` belongs to **one** `User` (host).
+* **Users and Bookings:** A `User` can make **multiple** `Bookings`. Each `Booking` is made by **one** `User`.
+* **Properties and Bookings:** A `Property` can have **multiple** `Bookings`. Each `Booking` is for **one** `Property`.
+* **Users and Reviews:** A `User` can write **multiple** `Reviews`. Each `Review` is written by **one** `User`.
+* **Properties and Reviews:** A `Property` can receive **multiple** `Reviews`. Each `Review` is for **one** `Property`.
+* **Bookings and Payments:** Each `Booking` can have **one** `Payment` associated with it (or multiple if partial payments are allowed, but for simplicity, we'll assume one primary payment). Each `Payment` is tied to **one** `Booking`.
+* **Users and Payments:** A `User` can initiate **multiple** `Payments` for various bookings. Each `Payment` is initiated by **one** `User`.
